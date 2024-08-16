@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Website Vulnerability Checker</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 10px;
+            border-radius: 5px;
+            background-color: #f8f9fa;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Website Vulnerability Checker</h1>
+        <p>Enter a website URL to check for basic vulnerabilities.</p>
+        <input type="text" id="urlInput" placeholder="Enter website URL (e.g., https://example.com)">
+        <button onclick="checkVulnerability()">Check Vulnerability</button>
+        <div class="result" id="result"></div>
+    </div>
+
+    <script>
+        function checkVulnerability() {
+            const url = document.getElementById('urlInput').value.trim();
+            const resultDiv = document.getElementById('result');
+
+            // Basic validation to check if HTTPS is being used
+            if (url === '') {
+                resultDiv.innerHTML = '<p style="color: red;">Please enter a valid URL.</p>';
+                return;
+            }
+
+            try {
+                const urlObject = new URL(url);
+                if (urlObject.protocol === 'https:') {
+                    resultDiv.innerHTML = '<p style="color: green;">The website is using HTTPS. Basic security check passed!</p>';
+                } else {
+                    resultDiv.innerHTML = '<p style="color: red;">The website is not using HTTPS. This site might be vulnerable to attacks.</p>';
+                }
+            } catch (e) {
+                resultDiv.innerHTML = '<p style="color: red;">Invalid URL format. Please enter a valid URL.</p>';
+            }
+        }
+    </script>
+</body>
+</html>
